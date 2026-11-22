@@ -11,7 +11,7 @@ An intelligent, agentic fuel supply operations platform built on top of the BUP 
 
 | Day | Date | Status | What Was Built |
 |-----|------|--------|----------------|
-| Day 1 | Nov 22 | ✅ Done | Architecture design, project skeleton, MCP server foundation |
+| Day 1 | Nov 20 to 22 | ✅ Done | Architecture design, project skeleton, MCP server foundation |
 | Day 2 | Nov 23 |  In Progress | Claude agents — monitor, forecast, allocate subagents |
 | Day 3 | Nov 24 |  Planned | FastAPI backend + PostgreSQL + Redis resilience layer |
 | Day 4 | Nov 25 |  Planned | React operator dashboard + Prometheus/Grafana observability |
