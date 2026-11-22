@@ -36,7 +36,7 @@ An intelligent, agentic fuel supply operations platform built on top of the BUP 
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                    BUP Fuel Supply Simulator                     │
+│                    BUP Fuel Supply Simulator                    │
 │              http://localhost:8000  (Docker container)          │
 └────────────────────────┬────────────────────────────────────────┘
                          │ REST + SSE
@@ -45,42 +45,42 @@ An intelligent, agentic fuel supply operations platform built on top of the BUP 
 │                     MCP SERVER LAYER                            │
 │         (wraps simulator API as Claude tools)                   │
 │                                                                 │
-│  get_inventory()        get_stations()                         │
-│  get_demand_history()   get_events()                           │
-│  get_routes()           submit_allocation()                    │
-│  get_metrics()          get_supply_arrivals()                  │
+│  get_inventory()        get_stations()                          │
+│  get_demand_history()   get_events()                            │
+│  get_routes()           submit_allocation()                     │
+│  get_metrics()          get_supply_arrivals()                   │ 
 └────────────────────────┬────────────────────────────────────────┘
                          │ MCP Protocol
                          ▼
 ┌─────────────────────────────────────────────────────────────────┐
 │              CLAUDE CODE ORCHESTRATOR (Main Agent)              │
 │                                                                 │
-│  ┌─────────────────┐  ┌──────────────────┐  ┌───────────────┐ │
-│  │ Monitoring Agent│  │Forecasting Agent │  │Allocation     │ │
-│  │                 │  │                  │  │Agent          │ │
-│  │ - SSE stream    │  │ - stockout time  │  │ - best route  │ │
-│  │ - shortage alert│  │ - demand forecast│  │ - quantity    │ │
-│  │ - anomaly detect│  │ - risk scoring   │  │ - explanation │ │
-│  │ - crisis detect │  │ - confidence %   │  │ - reasoning   │ │
-│  └─────────────────┘  └──────────────────┘  └───────────────┘ │
-└───────────────────────────────┬─────────────────────────────---┘
+│  ┌─────────────────┐  ┌──────────────────┐  ┌───────────────┐   │
+│  │ Monitoring Agent│  │Forecasting Agent │  │Allocation     │   │
+│  │                 │  │                  │  │Agent          │   │
+│  │ - SSE stream    │  │ - stockout time  │  │ - best route  │   │
+│  │ - shortage alert│  │ - demand forecast│  │ - quantity    │   │
+│  │ - anomaly detect│  │ - risk scoring   │  │ - explanation │   │
+│  │ - crisis detect │  │ - confidence %   │  │ - reasoning   │   │
+│  └─────────────────┘  └──────────────────┘  └───────────────┘   │
+└───────────────────────────────┬─────────────────────────────--- ┘
                                 │ decisions + explanations
                                 ▼
 ┌─────────────────────────────────────────────────────────────────┐
 │                    FASTAPI BACKEND                              │
 │                                                                 │
-│  POST /api/allocations     GET /api/stations                   │
-│  GET  /api/alerts          GET /api/forecast                   │
-│  GET  /api/decisions       GET /api/metrics                    │
-│  GET  /health              GET /api/events                     │
+│  POST /api/allocations     GET /api/stations                    │
+│  GET  /api/alerts          GET /api/forecast                    │
+│  GET  /api/decisions       GET /api/metrics                     │
+│  GET  /health              GET /api/events                      │
 │                                                                 │
-│  ┌──────────────┐  ┌──────────────┐  ┌────────────────────┐  │
-│  │  PostgreSQL  │  │    Redis     │  │  Resilience Layer  │  │
-│  │  decisions   │  │  cache +     │  │  circuit breaker   │  │
-│  │  history     │  │  fallback    │  │  retry + backoff   │  │
-│  │  alerts      │  │  state       │  │  degraded mode     │  │
-│  └──────────────┘  └──────────────┘  └────────────────────┘  │
-└───────────────────────────────┬─────────────────────────────---┘
+│  ┌──────────────┐  ┌──────────────┐  ┌────────────────────┐     │
+│  │  PostgreSQL  │  │    Redis     │  │  Resilience Layer  │     │
+│  │  decisions   │  │  cache +     │  │  circuit breaker   │     │
+│  │  history     │  │  fallback    │  │  retry + backoff   │     │
+│  │  alerts      │  │  state       │  │  degraded mode     │     │
+│  └──────────────┘  └──────────────┘  └────────────────────┘     │
+└───────────────────────────────┬─────────────────────────────--- ┘
                                 │
               ┌─────────────────┼──────────────────┐
               ▼                 ▼                  ▼
