@@ -11,11 +11,97 @@ An intelligent, agentic fuel supply operations platform built on top of the BUP 
 
 | Day | Date | Status | What Was Built |
 |-----|------|--------|----------------|
-| Day 1 | Nov 20 to 22 | ✅ Done | Architecture design, project skeleton, MCP server foundation |
-| Day 2 | Nov 23 |  In Progress | Claude agents — monitor, forecast, allocate subagents |
-| Day 3 | Nov 24 |  Planned | FastAPI backend + PostgreSQL + Redis resilience layer |
-| Day 4 | Nov 25 |  Planned | React operator dashboard + Prometheus/Grafana observability |
-| Day 5 | Nov 26 |  Planned | Load testing + CI/CD + final demo polish |
+| Day 1 | Nov 20 – 22 | ✅ Done | Architecture design, project skeleton, MCP server foundation |
+| Day 2 | Nov 23 | 🔄 In Progress | Claude agents — monitor, forecast, allocate subagents |
+| Day 3 | Nov 24 | ⏳ Planned | FastAPI backend + PostgreSQL + Redis resilience layer |
+| Day 4 | Nov 25 | ⏳ Planned | React operator dashboard + Prometheus/Grafana observability |
+| Day 5 | Nov 26 | ⏳ Planned | Load testing + CI/CD + final demo polish |
+
+---
+
+<details>
+<summary><strong>Day 1 — Nov 20 to 22 ✅ Architecture + Project Skeleton + MCP Server Foundation</strong></summary>
+
+### What Was Done
+
+**Architecture Design**
+- Defined the full 6-layer system architecture: Simulator → MCP Server → Claude Agents → FastAPI Backend → React Dashboard → DevOps/Observability
+- Made the key design decision to use Claude Code's agentic stack (MCP + Subagents) instead of a traditional ML pipeline — this means Claude itself reasons about fuel shortages and explains every decision in plain English
+- Documented all architecture decisions in [`docs/architecture.md`](docs/architecture.md)
+- Created 5-day delivery plan in [`docs/build-plan.md`](docs/build-plan.md)
+
+**Project Skeleton**
+- Created full folder structure for all 6 layers (agents, backend, frontend, observability, devops come in later days)
+- Set up `.gitignore`, `.env.example`, `docker-compose.yml` with simulator + MCP server
+- Stubbed out future services (backend, frontend, Prometheus, Grafana) as commented blocks in docker-compose — they get enabled day by day
+
+**MCP Server Foundation**
+- Built the complete MCP server in [`mcp-server/server.py`](mcp-server/server.py)
+- Wrapped all 13 BUP Fuel Supply Simulator endpoints as Claude-callable tools:
+  - `get_health()` — liveness probe
+  - `get_instance()` — current tick, sim_time, status
+  - `get_depots()` / `get_depot(id)` — depot inventory and capacity
+  - `get_stations()` / `get_station(id)` — station inventory and demand
+  - `get_routes()` — route availability and transit times
+  - `get_demand_history(station_id, limit)` — time-series data for forecasting
+  - `get_supply_arrivals()` — upcoming fuel deliveries
+  - `get_events()` — active crisis events
+  - `get_allocations()` — submitted allocation history
+  - `get_metrics()` — service level and allocation failure stats
+  - `submit_allocation(...)` — the only write operation
+  - `cancel_allocation(id)` — cancel PENDING allocations
+- Added smoke tests in [`mcp-server/tests/test_tools.py`](mcp-server/tests/test_tools.py)
+- Dockerized the MCP server
+
+### Files Added
+```
+README.md
+docker-compose.yml
+.gitignore
+.env.example
+docs/architecture.md
+docs/build-plan.md
+mcp-server/server.py
+mcp-server/requirements.txt
+mcp-server/Dockerfile
+mcp-server/tests/test_tools.py
+```
+
+### Key Decision
+Chose Claude Code's agentic approach (MCP + Subagents) over traditional ML pipelines because:
+1. Claude can explain *why* it recommends an allocation — no other team is doing this
+2. Directly matches the Poridhi lab curriculum on Agentic Engineering with Claude Code
+3. MCP is the standard protocol for connecting Claude to external systems like the simulator
+
+</details>
+
+<details>
+<summary><strong>Day 2 — Nov 23 🔄 Claude Agents — Monitor, Forecast, Allocate</strong></summary>
+
+*Work in progress — check back after Nov 23 commit.*
+
+</details>
+
+<details>
+<summary><strong>Day 3 — Nov 24 ⏳ FastAPI Backend + PostgreSQL + Redis</strong></summary>
+
+*Planned — starts Nov 24.*
+
+</details>
+
+<details>
+<summary><strong>Day 4 — Nov 25 ⏳ React Dashboard + Observability</strong></summary>
+
+*Planned — starts Nov 25.*
+
+</details>
+
+<details>
+<summary><strong>Day 5 — Nov 26 ⏳ Load Testing + CI/CD + Final Demo</strong></summary>
+
+*Planned — starts Nov 26 (deadline day).*
+
+</details>
 
 ---
 
