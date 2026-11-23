@@ -140,5 +140,3 @@ Fuel-Supply-Simulator/
 | DevOps | Docker Compose + GitHub Actions |
 
 ---
-
-**Deadline: November 26, 2026**
