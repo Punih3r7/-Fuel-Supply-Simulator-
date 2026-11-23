@@ -2,30 +2,20 @@
 
 ## Theme: Claude Agents - Monitor, Forecast, Allocate
 
-Work started. Pushing in stages throughout the day.
-
 ---
 
-## Progress
+## Push 1 - Agent folder structure and orchestrator
 
-### Done so far
+Created the agents/ directory with three subfolders: monitor, forecaster, allocator.
 
-- Created agents/ folder with three subagent directories: monitor, forecaster, allocator
-- Built the main orchestrator in agents/orchestrator.py
-- Orchestrator runs the cycle: Observe -> Detect -> Predict -> Decide -> Act -> Monitor -> Recover
-- Coordinates the three subagents in sequence each cycle
-- Handles errors with retry so it stays running if one cycle fails
+Built the main orchestrator in agents/orchestrator.py. It runs the core loop — Observe, Detect, Predict, Decide, Act, Monitor, Recover — and coordinates the three subagents in sequence each cycle. If a cycle fails it waits 10 seconds and retries so the loop never dies.
 
-### In progress
-
-- Monitoring agent (agents/monitor/agent.py) - reads station inventory, detects shortage alerts
-- Forecasting agent (agents/forecaster/agent.py) - calculates hours to stockout per station per fuel
-- Allocation agent (agents/allocator/agent.py) - decides what to send where, writes explanation
-
-### Still to push today
-
-- All three agent implementations
-- Agent requirements.txt and Dockerfile
-- Unit tests for each agent
+Files added:
+```
+agents/orchestrator.py
+agents/monitor/__init__.py
+agents/forecaster/__init__.py
+agents/allocator/__init__.py
+```
 
 [Back to README](../README.md)
