@@ -23,6 +23,7 @@ dist/
 
 # Docker
 *.log
+docker-compose.yml
 
 # IDE
 .vscode/
