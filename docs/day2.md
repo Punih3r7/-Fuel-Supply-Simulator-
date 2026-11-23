@@ -17,4 +17,11 @@ agents/forecaster/__init__.py
 agents/allocator/__init__.py
 ```
 
+Then built the forecasting agent. It takes the alerts from the monitoring agent, pulls the last 12 simulated hours of demand history for that station and fuel type, averages it out per tick, and divides the current inventory by that rate to get hours remaining before stockout. Results come back sorted by urgency — most critical first. Risk levels are CRITICAL under 3 hours, HIGH under 8, MEDIUM under 24, LOW after that.
+
+Files added:
+```
+agents/forecaster/agent.py
+```
+
 [Back to README](../README.md)
