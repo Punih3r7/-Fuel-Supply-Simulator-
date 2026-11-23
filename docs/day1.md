@@ -33,7 +33,7 @@ Built the complete MCP server wrapping all 13 BUP simulator endpoints as Claude-
 
 ---
 
-## Bit of testing myself
+## Bit of initial testing
 
 Starting the simulator:
 
