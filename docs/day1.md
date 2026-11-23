@@ -67,14 +67,7 @@ mcp-server/tests/test_tools.py
 
 ## Why This Approach
 
-Chose Claude Code's agentic approach over traditional ML pipelines for three reasons:
-
-1. Claude explains why it recommends each allocation. Judges can read the reasoning directly on the dashboard. No other team is doing this.
-2. It directly matches the Poridhi lab curriculum on Agentic Engineering with Claude Code.
-3. Every other team uses LightGBM plus PuLP plus allocate - a silent black box. This is a different category.
+first of all we told to do the agentic labs from poridhi of claude thats why agentic approach intead of traditioanl ml pipeline
 
 ---
 
-Next: Day 2 builds the Claude agent loop - Monitor, Forecasting, and Allocation subagents.
-
-[Back to README](../README.md)
