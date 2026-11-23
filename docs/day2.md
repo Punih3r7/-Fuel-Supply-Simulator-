@@ -4,29 +4,17 @@
 
 ---
 
-## Push 1 - Agent folder structure and orchestrator
+Started setting up the agents layer today. Created the agents/ directory with three subfolders for each agent and built the main orchestrator first since everything else hangs off it. The orchestrator runs the core loop — Observe, Detect, Predict, Decide, Act, Monitor, Recover — and calls each agent in sequence. If anything fails mid-cycle it waits and retries instead of crashing.
 
-Created the agents/ directory with three subfolders: monitor, forecaster, allocator.
+After that built the monitoring agent. It reads inventory across all 4 stations for all 3 fuel types and raises a shortage alert whenever a station's fill ratio drops below 25% of capacity. It also pulls whatever active crisis events are running at that moment so the alert carries that context forward to the next agent.
 
-Built the main orchestrator in agents/orchestrator.py. It runs the core loop — Observe, Detect, Predict, Decide, Act, Monitor, Recover — and coordinates the three subagents in sequence each cycle. If a cycle fails it waits 10 seconds and retries so the loop never dies.
-
-Files added:
+Files added so far:
 ```
 agents/orchestrator.py
 agents/monitor/__init__.py
+agents/monitor/agent.py
 agents/forecaster/__init__.py
 agents/allocator/__init__.py
-```
-
----
-
-## Push 2 - Monitoring agent
-
-Built the monitoring agent in agents/monitor/agent.py. It calls the simulator directly, reads inventory across all 4 stations for all 3 fuel types, and raises a ShortageAlert whenever a station's fill ratio drops below 25% capacity. It also pulls active crisis events so the alert carries context about what else is happening in the network at that moment.
-
-Files added:
-```
-agents/monitor/agent.py
 ```
 
 [Back to README](../README.md)
