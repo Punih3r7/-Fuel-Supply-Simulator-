@@ -45,21 +45,45 @@ Wrapped up the day by adding requirements.txt and a Dockerfile for the agents la
 
 ---
 
-## Run it yourself
+## Test run to see all ok till now
 
 Start the simulator:
 
 ```bash
 docker compose up -d
 ```
+![alt text](image-1.png)
 
 Trigger the agent loop manually against the live simulator:
 
 ```bash
-cd agents
-python orchestrator.py
+cd /home/punisher/testing/Poridhi/Fuel-Supply-Simulator
+
+python3 -c "
+import httpx
+
+client = httpx.Client(base_url='http://localhost:8000', timeout=10.0)
+
+stations = client.get('/v1/stations').json()
+print(f'Stations: {len(stations)}')
+for s in stations:
+    for fuel in ['DIESEL','PETROL','OCTANE']:
+        inv = s['inventory'].get(fuel, 0)
+        cap = s['capacity'].get(fuel, 1)
+        ratio = inv/cap
+        print(f'  {s[\"id\"]} {fuel}: {inv}L / {cap}L ({ratio:.0%})')
+
+history = client.get('/v1/demand-history', params={'limit':5}).json()
+print(f'Demand history: {len(history)} records readable')
+
+routes = client.get('/v1/routes').json()
+available = [r for r in routes if r['status'] == 'AVAILABLE']
+print(f'Routes: {len(available)}/{len(routes)} available')
+"
+
 ```
 
-You should see it print cycle output — alerts detected, forecasts calculated, allocations submitted.
+Results : 
 
-[Back to README](../README.md)
+![alt text](image-2.png)
+
