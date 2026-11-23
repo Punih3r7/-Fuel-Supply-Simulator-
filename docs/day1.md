@@ -48,10 +48,8 @@ cd mcp-server
 pytest tests/test_tools.py -v
 ```
 
-Expected output:
+Output:
 
-```
-![alt text](image.png)
-```
+![test result](image.png)
 
 [Back to README](../README.md)
