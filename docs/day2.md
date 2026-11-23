@@ -18,4 +18,15 @@ agents/forecaster/__init__.py
 agents/allocator/__init__.py
 ```
 
+---
+
+## Push 2 - Monitoring agent
+
+Built the monitoring agent in agents/monitor/agent.py. It calls the simulator directly, reads inventory across all 4 stations for all 3 fuel types, and raises a ShortageAlert whenever a station's fill ratio drops below 25% capacity. It also pulls active crisis events so the alert carries context about what else is happening in the network at that moment.
+
+Files added:
+```
+agents/monitor/agent.py
+```
+
 [Back to README](../README.md)
