@@ -31,4 +31,27 @@ Built the complete MCP server wrapping all 13 BUP simulator endpoints as Claude-
 - Smoke tests passing for all endpoints
 - MCP server Dockerized and wired into docker-compose
 
+---
+
+## Bit of testing myself
+
+Starting the simulator:
+
+```bash
+docker compose up -d
+```
+
+Smoke tests:
+
+```bash
+cd mcp-server
+pytest tests/test_tools.py -v
+```
+
+Expected output:
+
+```
+![alt text](image.png)
+```
+
 [Back to README](../README.md)
