@@ -31,4 +31,35 @@ Files added:
 agents/allocator/agent.py
 ```
 
+Wrapped up the day by adding requirements.txt and a Dockerfile for the agents layer so it runs in the same docker network as everything else.
+
+---
+
+## Summary
+
+- Orchestrator built with the full Observe, Detect, Predict, Decide, Act, Monitor, Recover loop
+- Monitoring agent reads all stations and raises alerts when fill ratio drops below 25%
+- Forecasting agent calculates hours to stockout from real demand history, sorts by urgency
+- Allocation agent picks the fastest available route, works out a safe quantity, submits to simulator, and writes a plain-English explanation for every decision
+- All three agents Dockerized and wired together
+
+---
+
+## Run it yourself
+
+Start the simulator:
+
+```bash
+docker compose up -d
+```
+
+Trigger the agent loop manually against the live simulator:
+
+```bash
+cd agents
+python orchestrator.py
+```
+
+You should see it print cycle output — alerts detected, forecasts calculated, allocations submitted.
+
 [Back to README](../README.md)
