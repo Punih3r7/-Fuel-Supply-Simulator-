@@ -8,7 +8,7 @@
 
 ### Architecture Design
 
-Defined the full 6-layer system architecture:
+full 6-layer system architecture:
 
 ```
 Simulator -> MCP Server -> Claude Agents -> FastAPI Backend -> React Dashboard -> DevOps
