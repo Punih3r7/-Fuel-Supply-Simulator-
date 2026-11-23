@@ -24,4 +24,11 @@ Files added:
 agents/forecaster/agent.py
 ```
 
+Then the allocation agent. It takes the CRITICAL and HIGH forecasts, finds the fastest available route to that station, checks the depot actually has stock, works out a safe quantity to send — capped at half the depot stock, the route max shipment, and the depot dispatch limit — and submits it to the simulator. Every decision it makes comes with a plain-English explanation of why: current inventory, demand rate, hours remaining, where it is sending from, and how long the transit takes. That explanation is what shows up on the dashboard later.
+
+Files added:
+```
+agents/allocator/agent.py
+```
+
 [Back to README](../README.md)
