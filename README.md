@@ -114,13 +114,13 @@ curl http://localhost:8080/health      # backend (Day 3+)
 ```
 Fuel-Supply-Simulator/
 ├── mcp-server/          # MCP Server — wraps BUP simulator as Claude tools
-├── agents/              # Claude Code orchestrator + subagents (Day 2)
-├── backend/             # FastAPI REST API (Day 3)
-├── frontend/            # React operator dashboard (Day 4)
-├── observability/       # Prometheus, Grafana, Loki configs (Day 4)
-├── devops/              # k6 load tests, scripts (Day 5)
+├── agents/              # Claude Code orchestrator + subagents 
+├── backend/             # FastAPI REST API 
+├── frontend/            # React operator dashboard 
+├── observability/       # Prometheus, Grafana, Loki configs
+├── devops/              # k6 load tests, scripts 
 ├── docs/                # Architecture, ADRs, day plans
-└── .github/workflows/   # CI/CD pipelines (Day 5)
+└── .github/workflows/   # CI/CD pipelines
 ```
 
 ---
@@ -131,12 +131,12 @@ Fuel-Supply-Simulator/
 |---|---|
 | AI Orchestration | Claude Code (Subagents + MCP) |
 | MCP Server | Python + FastMCP |
-| Backend API | Python FastAPI |
-| Database | PostgreSQL 16 |
+| Backend API | <!-- Python FastAPI --> |
+| Database | <!-- PostgreSQL 16 --> |
 | Cache / Fallback | Redis 7 |
-| Frontend | React 18 + Vite + Tailwind CSS |
-| Observability | Prometheus + Grafana + Loki |
-| Load Testing | k6 |
+| Frontend | <!-- React 18 + Vite + Tailwind CSS --> |
+| Observability | <!-- Prometheus + Grafana + Loki --> |
+| Load Testing | <!-- k6 --> |
 | DevOps | Docker Compose + GitHub Actions |
 
 ---
