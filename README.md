@@ -140,3 +140,5 @@ Fuel-Supply-Simulator/
 | DevOps | Docker Compose + GitHub Actions |
 
 ---
+
+testing auto commit in kali -_-
