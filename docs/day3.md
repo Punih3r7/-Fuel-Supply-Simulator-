@@ -57,4 +57,40 @@ Files added:
 backend/resilience/fallback.py
 ```
 
+---
+
+## Summary
+
+- FastAPI app with full router structure
+- PostgreSQL models for decisions and alerts with SQLAlchemy
+- Simulator client with 3-attempt retry and exponential backoff
+- API routes for stations, depots, events, metrics, alerts, decisions, health
+- Redis cache storing last known simulator state with 5 minute TTL
+- Circuit breaker opening after 3 consecutive failures, recovering after 30 seconds
+- Fallback layer wrapping every simulator call so the dashboard stays alive under fault injection
+- Backend Dockerized and ready to wire into docker-compose
+
+---
+
+## Run it yourself
+
+With the simulator already running:
+
+```bash
+cd backend
+pip install fastapi uvicorn httpx
+uvicorn main:app --reload --port 8080
+```
+
+Then hit the health check:
+
+```bash
+curl http://localhost:8080/health
+```
+
+Expected output:
+```json
+{"backend": "ok", "simulator": "ok"}
+```
+
 [Back to README](../README.md)
