@@ -91,7 +91,9 @@ print('OK — circuit breaker working')
 "
 ```
 
-Output:![alt text](image-3.png)
+Output:
+![alt text](image-3.png)
+
 
 **resilience modules:**
 
@@ -110,6 +112,7 @@ print('OK — all resilience modules load')
 
 Output:
 ![alt text](image-4.png)
+
 
 **backend and the health endpoint:**
 
