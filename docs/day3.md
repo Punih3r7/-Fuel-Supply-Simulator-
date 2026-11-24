@@ -22,3 +22,18 @@ Files added:
 ```
 backend/simulator/client.py
 ```
+
+After that built all the API routes. Stations and depots call the simulator client directly and pass the response through. Events and metrics do the same. Alerts and decisions read from PostgreSQL — those are written by the agents, not fetched live. Health checks both the backend itself and whether the simulator is reachable.
+
+Files added:
+```
+backend/api/stations.py
+backend/api/depots.py
+backend/api/events.py
+backend/api/metrics.py
+backend/api/alerts.py
+backend/api/decisions.py
+backend/api/health.py
+```
+
+[Back to README](../README.md)
