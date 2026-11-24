@@ -22,5 +22,3 @@ Files added:
 ```
 backend/simulator/client.py
 ```
-
-[Back to README](../README.md)
