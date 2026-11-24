@@ -36,4 +36,11 @@ backend/api/decisions.py
 backend/api/health.py
 ```
 
+Then the Redis cache layer. Any time the simulator client successfully returns data it gets written to Redis with a 5 minute TTL. If the simulator goes down and returns 503, the resilience layer reads from Redis instead so the dashboard never sees an outage unless the cache is also expired.
+
+Files added:
+```
+backend/cache/redis_cache.py
+```
+
 [Back to README](../README.md)
