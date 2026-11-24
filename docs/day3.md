@@ -91,8 +91,7 @@ print('OK — circuit breaker working')
 "
 ```
 
-Expected output:
-![alt text](image-3.png)
+Output:![alt text](image-3.png)
 
 **resilience modules:**
 
