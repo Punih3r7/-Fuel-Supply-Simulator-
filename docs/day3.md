@@ -43,4 +43,11 @@ Files added:
 backend/cache/redis_cache.py
 ```
 
+Built the circuit breaker in backend/resilience/circuit_breaker.py. It tracks consecutive simulator failures — after 3 in a row it opens the circuit and the system stops trying to reach the simulator entirely. After 30 seconds it moves to half-open and tries once more. If that works it closes again. This is what lets the system stay alive under fault injection.
+
+Files added:
+```
+backend/resilience/circuit_breaker.py
+```
+
 [Back to README](../README.md)
