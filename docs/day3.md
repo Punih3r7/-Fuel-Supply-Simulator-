@@ -16,4 +16,11 @@ backend/resilience/__init__.py
 backend/simulator/__init__.py
 ```
 
+Then built the simulator client in backend/simulator/client.py. It wraps every call to the BUP simulator with retry logic — if a request fails it waits and tries again up to 3 times with increasing delay. If the simulator returns 503 it raises SimulatorUnavailable so the resilience layer above it knows to switch to cached data instead of crashing.
+
+Files added:
+```
+backend/simulator/client.py
+```
+
 [Back to README](../README.md)
