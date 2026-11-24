@@ -74,10 +74,35 @@ backend/resilience/fallback.py
 
 ## Run it yourself
 
-Test the resilience modules load without any external services:
+**Step 1 — Test the circuit breaker state transitions (no external services needed):**
 
 ```bash
-cd backend
+cd /home/punisher/testing/Poridhi/Fuel-Supply-Simulator/backend
+python3 -c "
+from resilience.circuit_breaker import circuit_breaker, State
+print('initial state:', circuit_breaker.status())
+circuit_breaker.record_failure()
+circuit_breaker.record_failure()
+circuit_breaker.record_failure()
+print('after 3 failures:', circuit_breaker.status())
+circuit_breaker.record_success()
+print('after recovery:', circuit_breaker.status())
+print('OK — circuit breaker working')
+"
+```
+
+Expected output:
+```
+initial state: closed
+after 3 failures: open
+after recovery: closed
+OK — circuit breaker working
+```
+
+**Step 2 — Test all resilience modules load correctly:**
+
+```bash
+cd /home/punisher/testing/Poridhi/Fuel-Supply-Simulator/backend
 python3 -c "
 from resilience.circuit_breaker import circuit_breaker
 from resilience.fallback import with_fallback
@@ -97,22 +122,24 @@ redis cache: imported ok
 OK — all resilience modules load
 ```
 
-Start the backend (simulator does not need to be running):
+**Step 3 — Start the backend and hit the health endpoint:**
 
 ```bash
-cd backend
+cd /home/punisher/testing/Poridhi/Fuel-Supply-Simulator/backend
 uvicorn main:app --reload --port 8080
 ```
 
-Then hit the health check:
+In a second terminal:
 
 ```bash
 curl http://localhost:8080/health
 ```
 
-Output without simulator running (expected — backend is alive, resilience layer handles the missing simulator):
+Output:
 ```json
 {"backend":"ok","simulator":"unavailable"}
 ```
+
+`"simulator":"unavailable"` is not a failure — it proves the backend handles a missing simulator gracefully instead of crashing. The resilience layer catches the connection error and reports degraded mode instead of a 500. This is exactly what the circuit breaker and fallback layer are built to do.
 
 [Back to README](../README.md)
