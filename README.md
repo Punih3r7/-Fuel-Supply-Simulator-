@@ -132,7 +132,7 @@ Fuel-Supply-Simulator/
 | AI Orchestration | Claude Code (Subagents + MCP) |
 | MCP Server | Python + FastMCP |
 | Backend API | Python FastAPI |
-| Database | <!-- PostgreSQL 16 --> |
+| Database | PostgreSQL 16 |
 | Cache / Fallback | Redis 7 |
 | Frontend | <!-- React 18 + Vite + Tailwind CSS --> |
 | Observability | <!-- Prometheus + Grafana + Loki --> |
