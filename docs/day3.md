@@ -72,9 +72,9 @@ backend/resilience/fallback.py
 
 ---
 
-## Run it yourself
+## Test Run
 
-**Step 1 — Test the circuit breaker state transitions (no external services needed):**
+**circuit breaker state transitions:**
 
 ```bash
 cd /home/punisher/testing/Poridhi/Fuel-Supply-Simulator/backend
@@ -92,14 +92,9 @@ print('OK — circuit breaker working')
 ```
 
 Expected output:
-```
-initial state: closed
-after 3 failures: open
-after recovery: closed
-OK — circuit breaker working
-```
+![alt text](image-3.png)
 
-**Step 2 — Test all resilience modules load correctly:**
+**resilience modules:**
 
 ```bash
 cd /home/punisher/testing/Poridhi/Fuel-Supply-Simulator/backend
@@ -115,19 +110,15 @@ print('OK — all resilience modules load')
 ```
 
 Output:
-```
-circuit_breaker: closed
-fallback layer: imported ok
-redis cache: imported ok
-OK — all resilience modules load
-```
+![alt text](image-4.png)
 
-**Step 3 — Start the backend and hit the health endpoint:**
+**backend and the health endpoint:**
 
 ```bash
 cd /home/punisher/testing/Poridhi/Fuel-Supply-Simulator/backend
 uvicorn main:app --reload --port 8080
 ```
+![alt text](image-5.png)
 
 In a second terminal:
 
@@ -136,10 +127,8 @@ curl http://localhost:8080/health
 ```
 
 Output:
-```json
-{"backend":"ok","simulator":"unavailable"}
-```
+![alt text](image-6.png)
+
 
 `"simulator":"unavailable"` is not a failure — it proves the backend handles a missing simulator gracefully instead of crashing. The resilience layer catches the connection error and reports degraded mode instead of a 500. This is exactly what the circuit breaker and fallback layer are built to do.
 
-[Back to README](../README.md)
