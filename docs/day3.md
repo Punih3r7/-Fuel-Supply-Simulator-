@@ -50,4 +50,11 @@ Files added:
 backend/resilience/circuit_breaker.py
 ```
 
+Last thing for the day was the fallback layer in backend/resilience/fallback.py. Every API route wraps its simulator call through with_fallback() — it checks the circuit breaker first, and if it is open serves Redis cache. If the circuit is closed but the call fails it records the failure, tries Redis, and only raises an error if the cache is also empty. This is the layer that keeps the dashboard alive when the simulator is injecting faults.
+
+Files added:
+```
+backend/resilience/fallback.py
+```
+
 [Back to README](../README.md)
