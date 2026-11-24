@@ -74,11 +74,33 @@ backend/resilience/fallback.py
 
 ## Run it yourself
 
-With the simulator already running:
+Test the resilience modules load without any external services:
 
 ```bash
 cd backend
-pip install fastapi uvicorn httpx
+python3 -c "
+from resilience.circuit_breaker import circuit_breaker
+from resilience.fallback import with_fallback
+from cache.redis_cache import get_cache, set_cache
+print('circuit_breaker:', circuit_breaker.status())
+print('fallback layer: imported ok')
+print('redis cache: imported ok')
+print('OK — all resilience modules load')
+"
+```
+
+Output:
+```
+circuit_breaker: closed
+fallback layer: imported ok
+redis cache: imported ok
+OK — all resilience modules load
+```
+
+Start the backend (simulator does not need to be running):
+
+```bash
+cd backend
 uvicorn main:app --reload --port 8080
 ```
 
@@ -88,9 +110,9 @@ Then hit the health check:
 curl http://localhost:8080/health
 ```
 
-Expected output:
+Output without simulator running (expected — backend is alive, resilience layer handles the missing simulator):
 ```json
-{"backend": "ok", "simulator": "ok"}
+{"backend":"ok","simulator":"unavailable"}
 ```
 
 [Back to README](../README.md)
