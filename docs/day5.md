@@ -1,0 +1,24 @@
+# Day 5 - Nov 26
+
+## Theme: Load Testing + CI/CD + Final Demo Polish
+
+---
+
+Last day before submission. The system is built — MCP server, agents, backend, frontend, observability. Today is about making sure it holds under load, automates its own quality checks, and ships cleanly as a single stack.
+
+Started with the load tests. Built two k6 scripts: a smoke test that sends one user through every endpoint for 30 seconds just to confirm nothing is broken, and a full load test that ramps up to 50 concurrent users and checks that p95 latency stays under 500ms and the error rate stays under 1%. The load test hits health, stations, depots, alerts, decisions, and metrics randomly to simulate a real operator using the dashboard while agents are running in the background.
+
+Files added:
+```
+devops/k6/smoke-test.js
+devops/k6/load-test.js
+```
+
+Then the CI pipeline. Three jobs run on every push to main: MCP server smoke tests in Python, a backend import check that confirms all resilience and API modules load cleanly, and a frontend build to catch any broken JSX before it hits production. The MCP tests are the same ones from day 1 — they now run automatically on every commit so regressions are caught immediately.
+
+Files added:
+```
+.github/workflows/ci.yml
+```
+
+[Back to README](../README.md)
