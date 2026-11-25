@@ -76,14 +76,36 @@ observability/grafana/dashboard.json
 
 ---
 
-## Run it yourself
+## Test Run
+
+### Terminal 1 — backend:
 
 ```bash
-cd frontend
+cd /home/punisher/testing/Poridhi/Fuel-Supply-Simulator/backend
+uvicorn main:app --reload --port 8080
+```
+![alt text](image-7.png)
+
+### Terminal 2 — frontend:
+
+```bash
+cd /home/punisher/testing/Poridhi/Fuel-Supply-Simulator/frontend
 npm install
 npm run dev
 ```
+![alt text](image-8.png)
 
 Open http://localhost:3000 — header shows backend/simulator status. Navigate between Dashboard, Alerts and Decisions using the top nav.
 
-[Back to README](../README.md)
+![alt text](image-9.png)
+
+### Terminal 3 — frontend:
+
+```bash
+docker compose up -d
+```
+Open http://localhost:3000
+
+![alt text](image-10.png)
+
+simulator showsa green
