@@ -40,4 +40,18 @@ frontend/src/pages/Alerts.jsx
 frontend/src/components/AlertBadge.jsx
 ```
 
+Then the decisions feed — the most important page for the judges. Each row shows what the agent decided: station, fuel type, quantity, source depot, and the plain-English explanation the allocator agent wrote. This is the differentiator from every other team — you can read exactly why the AI made each decision instead of just seeing a number.
+
+Files added:
+```
+frontend/src/pages/Decisions.jsx
+```
+
+Also added the Prometheus config. It scrapes the backend and the simulator every 15 seconds — request rate, error rate, latency. That feeds into Grafana tomorrow.
+
+Files added:
+```
+observability/prometheus.yml
+```
+
 [Back to README](../README.md)
