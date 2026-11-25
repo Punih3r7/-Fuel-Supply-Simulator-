@@ -99,7 +99,7 @@ Open http://localhost:3000 — header shows backend/simulator status. Navigate b
 
 ![alt text](image-9.png)
 
-### Terminal 3 — frontend:
+### Docker:
 
 ```bash
 docker compose up -d
@@ -108,4 +108,6 @@ Open http://localhost:3000
 
 ![alt text](image-10.png)
 
-simulator showsa green
+Simulator shows green when the full stack is running.
+
+[Back to README](../README.md)

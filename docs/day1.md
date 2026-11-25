@@ -51,5 +51,3 @@ pytest tests/test_tools.py -v
 Output:
 
 ![test result](image.png)
-
-[Back to README](../README.md)
