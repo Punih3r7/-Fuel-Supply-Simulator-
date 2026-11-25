@@ -1,11 +1,15 @@
 import { useState } from 'react'
 import Header from './components/Header'
 import Dashboard from './pages/Dashboard'
+import Alerts from './pages/Alerts'
 
 export default function App() {
   const [page, setPage] = useState('dashboard')
 
-  const pages = { dashboard: <Dashboard /> }
+  const pages = {
+    dashboard: <Dashboard />,
+    alerts: <Alerts />,
+  }
 
   return (
     <div style={{ minHeight: '100vh', background: '#0f172a' }}>

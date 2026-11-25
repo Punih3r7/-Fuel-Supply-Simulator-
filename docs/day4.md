@@ -1,0 +1,43 @@
+# Day 4 - Nov 25
+
+## Theme: React Dashboard + Prometheus/Grafana Observability
+
+---
+
+Started the frontend today. The whole point of this layer is to make the agent decisions visible to a human operator — without it you can read the backend JSON but you cannot see what is happening at a glance. Built the React app with Vite, set up the proxy so frontend calls to /api go straight to the backend on port 8080, and got the basic health status rendering first to confirm the connection works.
+
+Files added:
+```
+frontend/package.json
+frontend/vite.config.js
+frontend/index.html
+frontend/src/main.jsx
+frontend/src/App.jsx
+frontend/src/index.css
+```
+
+Then the API client and the header. The API client is a thin fetch wrapper — one function per backend endpoint, all returning promises. The header polls the health endpoint every 10 seconds and shows green/amber/red dots for backend and simulator status so an operator can see at a glance if anything is degraded. Added navigation buttons for the three pages.
+
+Files added:
+```
+frontend/src/api/client.js
+frontend/src/components/Header.jsx
+```
+
+After that the stations dashboard. Each station gets a card showing fuel bars for DIESEL, PETROL, and OCTANE — the bar colour shifts from green to amber to red as inventory drops. Cards with any fuel below 25% capacity get a red border so critical stations stand out without reading the numbers. The dashboard polls the backend every 15 seconds so it stays live.
+
+Files added:
+```
+frontend/src/pages/Dashboard.jsx
+frontend/src/components/StationCard.jsx
+```
+
+Then the alerts page. It reads from the backend /alerts endpoint and lists them newest first with risk badges, inventory remaining, and hours to stockout. Each alert has a coloured left border and a risk badge — CRITICAL in red, HIGH in orange, MEDIUM in yellow, LOW in green — so the page has a visual severity hierarchy at a glance. Polls every 10 seconds.
+
+Files added:
+```
+frontend/src/pages/Alerts.jsx
+frontend/src/components/AlertBadge.jsx
+```
+
+[Back to README](../README.md)
