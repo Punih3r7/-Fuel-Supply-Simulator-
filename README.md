@@ -103,8 +103,23 @@ An intelligent, agentic fuel supply operations platform built on top of the BUP 
 git clone https://github.com/Punih3r7/-Fuel-Supply-Simulator-.git
 cd Fuel-Supply-Simulator
 docker compose up -d
-curl http://localhost:8000/v1/health   # simulator
-curl http://localhost:8080/health      # backend (Day 3+)
+```
+
+Wait for all services to be healthy, then open:
+
+| Service | URL |
+|---|---|
+| Simulator | http://localhost:8000/v1/health |
+| Backend | http://localhost:8080/health |
+| Dashboard | http://localhost:3000 |
+| Prometheus | http://localhost:9090 |
+| Grafana | http://localhost:3001 |
+
+Run load tests:
+
+```bash
+k6 run devops/k6/smoke-test.js
+k6 run devops/k6/load-test.js
 ```
 
 ---
