@@ -56,7 +56,6 @@ Wait for all services to be healthy, then:
 | Backend | http://localhost:8080/health |
 | Dashboard | http://localhost:3000 |
 ![alt text](image-11.png)
-
 | Prometheus | http://localhost:9090 |
 | Grafana | http://localhost:3001 |
 
