@@ -15,7 +15,7 @@ An intelligent, agentic fuel supply operations platform built on top of the BUP 
 | Day 2 | Nov 23 | Done | Claude agents - monitor, forecast, allocate subagents | [View details](docs/day2.md) |
 | Day 3 | Nov 24 | Done | FastAPI backend + PostgreSQL + Redis resilience layer | [View details](docs/day3.md) |
 | Day 4 | Nov 25 | Done | React operator dashboard + Prometheus/Grafana observability | [View details](docs/day4.md) |
-| Day 5 | Nov 26 | In Progress | Load testing + CI/CD + final demo polish | [View details](docs/day5.md) |
+| Day 5 | Nov 26 | Done | Load testing + CI/CD + final demo polish | [View details](docs/day5.md) |
 
 ---
 

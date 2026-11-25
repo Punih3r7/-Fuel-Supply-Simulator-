@@ -28,4 +28,47 @@ Files updated:
 docker-compose.yml
 ```
 
+---
+
+## Summary
+
+- k6 smoke test hitting every endpoint with 1 user for 30 seconds
+- k6 load test ramping to 50 concurrent users, p95 < 500ms, error rate < 1%
+- GitHub Actions CI with 3 jobs: MCP tests, backend import check, frontend build
+- docker-compose.yml fully wired — all 9 services running from one command
+- Five days, six layers, one agentic intelligence platform
+
+---
+
+## Run it yourself
+
+```bash
+git clone https://github.com/Punih3r7/-Fuel-Supply-Simulator-.git
+cd Fuel-Supply-Simulator
+docker compose up -d
+```
+
+Wait for all services to be healthy, then:
+
+| Service | URL |
+|---|---|
+| Simulator | http://localhost:8000/v1/health |
+| Backend | http://localhost:8080/health |
+| Dashboard | http://localhost:3000 |
+| Prometheus | http://localhost:9090 |
+| Grafana | http://localhost:3001 |
+
+Run the smoke test:
+
+```bash
+k6 run devops/k6/smoke-test.js
+```
+
+Run the full load test:
+
+```bash
+k6 run devops/k6/load-test.js
+```
+
+[Back to README](../README.md)
 
