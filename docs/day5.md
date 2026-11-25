@@ -55,6 +55,8 @@ Wait for all services to be healthy, then:
 | Simulator | http://localhost:8000/v1/health |
 | Backend | http://localhost:8080/health |
 | Dashboard | http://localhost:3000 |
+![alt text](image-11.png)
+
 | Prometheus | http://localhost:9090 |
 | Grafana | http://localhost:3001 |
 
@@ -69,6 +71,3 @@ Run the full load test:
 ```bash
 k6 run devops/k6/load-test.js
 ```
-
-[Back to README](../README.md)
-
