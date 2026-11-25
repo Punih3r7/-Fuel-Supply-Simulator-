@@ -109,5 +109,3 @@ Open http://localhost:3000
 ![alt text](image-10.png)
 
 Simulator shows green when the full stack is running.
-
-[Back to README](../README.md)
