@@ -64,6 +64,8 @@ Run the smoke test:
 ```bash
 k6 run devops/k6/smoke-test.js
 ```
+![alt text](image-12.png) ![alt text](image-13.png)
+
 
 Run the full load test:
 
