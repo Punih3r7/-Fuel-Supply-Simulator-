@@ -72,3 +72,4 @@ Run the full load test:
 ```bash
 k6 run devops/k6/load-test.js
 ```
+![alt text](image-14.png) ![alt text](image-15.png)
