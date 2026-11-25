@@ -134,9 +134,9 @@ Fuel-Supply-Simulator/
 | Backend API | Python FastAPI |
 | Database | PostgreSQL 16 |
 | Cache / Fallback | Redis 7 |
-| Frontend | <!-- React 18 + Vite + Tailwind CSS --> |
-| Observability | <!-- Prometheus + Grafana + Loki --> |
-| Load Testing | <!-- k6 --> |
+| Frontend | React 18 + Vite + Tailwind CSS  |
+| Observability | Prometheus + Grafana + Loki |
+| Load Testing |  k6 |
 | DevOps | Docker Compose + GitHub Actions |
 
 ---
