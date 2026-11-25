@@ -1,0 +1,105 @@
+services:
+
+  simulator:
+    image: asifmahmoud414/bup-fuel-supply-simulator:1.0.0
+    environment:
+      SIMULATION_SPEED: ${SIMULATION_SPEED:-15}
+      TICK_MINUTES: ${TICK_MINUTES:-8}
+      SIMULATOR_START_MODE: ${SIMULATOR_START_MODE:-paused}
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/v1/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  mcp-server:
+    build: ./mcp-server
+    environment:
+      SIMULATOR_URL: http://simulator:8000
+    ports:
+      - "8001:8001"
+    depends_on:
+      simulator:
+        condition: service_healthy
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: fueldb
+      POSTGRES_USER: fuel
+      POSTGRES_PASSWORD: fuel
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fuel -d fueldb"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  backend:
+    build: ./backend
+    environment:
+      DATABASE_URL: postgresql://fuel:fuel@postgres:5432/fueldb
+      REDIS_URL: redis://redis:6379
+      SIMULATOR_URL: http://simulator:8000
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      simulator:
+        condition: service_healthy
+    restart: on-failure
+
+  agents:
+    build: ./agents
+    environment:
+      SIMULATOR_URL: http://simulator:8000
+      BACKEND_URL: http://backend:8080
+    depends_on:
+      - backend
+      - simulator
+    restart: on-failure
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./observability/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+
+  grafana:
+    image: grafana/grafana:latest
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: admin
+    volumes:
+      - ./observability/grafana:/etc/grafana/provisioning
+    ports:
+      - "3001:3000"
+    depends_on:
+      - prometheus
+
+volumes:
+  postgres_data:
+  redis_data:

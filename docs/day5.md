@@ -21,4 +21,11 @@ Files added:
 .github/workflows/ci.yml
 ```
 
+Then wired the full stack together in docker-compose.yml. This file existed since day 1 but was hidden from the repo while each service was being built — the simulator and MCP server were the only things uncommented. Today all the services came online: PostgreSQL, Redis, the FastAPI backend, the agents, the React frontend, Prometheus, and Grafana. Everything depends on what it needs and has healthchecks so the startup order is correct. One command brings the entire platform up.
+
+Files updated:
+```
+docker-compose.yml
+```
+
 [Back to README](../README.md)
