@@ -54,4 +54,36 @@ Files added:
 observability/prometheus.yml
 ```
 
+Finished with the Grafana dashboard. Five panels: request rate, simulator health, active alerts count, circuit breaker state, and total decisions submitted. Everything an on-call operator needs on one screen. The dashboard refreshes every 15 seconds off the same Prometheus data.
+
+Files added:
+```
+observability/grafana/dashboard.json
+```
+
+---
+
+## Summary
+
+- React app with Vite, proxy wired to FastAPI backend on port 8080
+- API client wrapping all backend endpoints as simple fetch calls
+- Header with live health status polling every 10 seconds
+- Stations dashboard with fuel bars per fuel type, red border on low inventory
+- Alerts page with risk badges, inventory remaining, hours to stockout
+- Decisions feed showing every AI allocation with plain-English explanation
+- Prometheus scraping backend and simulator every 15 seconds
+- Grafana dashboard panels for request rate, health, alerts, circuit breaker, decisions
+
+---
+
+## Run it yourself
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Open http://localhost:3000 — header shows backend/simulator status. Navigate between Dashboard, Alerts and Decisions using the top nav.
+
 [Back to README](../README.md)
