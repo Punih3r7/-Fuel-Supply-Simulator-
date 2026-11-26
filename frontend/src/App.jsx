@@ -3,6 +3,7 @@ import Header from './components/Header'
 import Dashboard from './pages/Dashboard'
 import Alerts from './pages/Alerts'
 import Decisions from './pages/Decisions'
+import Events from './pages/Events'
 
 export default function App() {
   const [page, setPage] = useState('dashboard')
@@ -11,6 +12,7 @@ export default function App() {
     dashboard: <Dashboard />,
     alerts: <Alerts />,
     decisions: <Decisions />,
+    events: <Events />,
   }
 
   return (
