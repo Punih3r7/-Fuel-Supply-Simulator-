@@ -11,18 +11,19 @@ Each cycle:
 """
 
 import asyncio
+import httpx
 from monitor.agent import MonitoringAgent
 from forecaster.agent import ForecastingAgent
 from allocator.agent import AllocationAgent
 
 
 class Orchestrator:
-    def __init__(self, mcp_url: str, backend_url: str):
-        self.mcp_url = mcp_url
+    def __init__(self, simulator_url: str, backend_url: str):
+        self.simulator_url = simulator_url
         self.backend_url = backend_url
-        self.monitor = MonitoringAgent(mcp_url)
-        self.forecaster = ForecastingAgent(mcp_url)
-        self.allocator = AllocationAgent(mcp_url, backend_url)
+        self.monitor = MonitoringAgent(simulator_url)
+        self.forecaster = ForecastingAgent(simulator_url)
+        self.allocator = AllocationAgent(simulator_url, backend_url)
 
     async def run(self):
         """Main loop. Runs continuously until stopped."""
@@ -45,14 +46,52 @@ class Orchestrator:
         # Step 2: forecast risk for each alert
         forecasts = await self.forecaster.forecast(alerts)
 
-        # Step 3: decide allocations and explain
-        await self.allocator.decide(forecasts)
+        # Step 3: save alerts to backend
+        await self._save_alerts(forecasts)
+
+        # Step 4: decide allocations and explain
+        decisions = await self.allocator.decide(forecasts)
+
+        # Step 5: save decisions to backend
+        await self._save_decisions(decisions)
 
         await asyncio.sleep(5)
+
+    async def _save_alerts(self, forecasts):
+        async with httpx.AsyncClient(base_url=self.backend_url, timeout=5.0) as client:
+            for f in forecasts:
+                try:
+                    await client.post("/alerts/internal", json={
+                        "station_id": f.station_id,
+                        "station_name": f.station_name,
+                        "fuel_type": f.fuel_type,
+                        "current_inventory": f.current_inventory,
+                        "hours_to_stockout": f.hours_to_stockout,
+                        "risk_level": f.risk_level,
+                    })
+                except Exception as e:
+                    print(f"Failed to save alert: {e}")
+
+    async def _save_decisions(self, decisions):
+        async with httpx.AsyncClient(base_url=self.backend_url, timeout=5.0) as client:
+            for d in decisions:
+                try:
+                    await client.post("/decisions/internal", json={
+                        "station_id": d.station_id,
+                        "station_name": d.station_name,
+                        "fuel_type": d.fuel_type,
+                        "depot_id": d.depot_id,
+                        "route_id": d.route_id,
+                        "quantity": d.quantity,
+                        "explanation": d.explanation,
+                        "idempotency_key": d.idempotency_key,
+                    })
+                except Exception as e:
+                    print(f"Failed to save decision: {e}")
 
 
 if __name__ == "__main__":
     import os
-    mcp_url = os.getenv("MCP_URL", "http://localhost:8001")
+    simulator_url = os.getenv("SIMULATOR_URL", "http://localhost:8000")
     backend_url = os.getenv("BACKEND_URL", "http://localhost:8080")
-    asyncio.run(Orchestrator(mcp_url, backend_url).run())
+    asyncio.run(Orchestrator(simulator_url, backend_url).run())

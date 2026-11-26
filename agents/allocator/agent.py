@@ -106,6 +106,16 @@ class AllocationAgent:
             f"Risk level: {forecast.risk_level}."
         )
 
+    async def _get_depots(self) -> list:
+        r = await self.client.get("/v1/depots")
+        r.raise_for_status()
+        return r.json()
+
+    async def _get_routes(self) -> list:
+        r = await self.client.get("/v1/routes")
+        r.raise_for_status()
+        return r.json()
+
     async def _submit(self, decision: AllocationDecision) -> bool:
         try:
             r = await self.client.post("/v1/allocations", json={
