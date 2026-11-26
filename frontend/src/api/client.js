@@ -15,4 +15,5 @@ export const api = {
   decisions: (limit = 20) => get(`/decisions?limit=${limit}`),
   events: () => get('/events'),
   metrics: () => get('/metrics'),
+  demandHistory: (limit = 60) => get(`/demand-history?limit=${limit}`),
 }

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Sidebar from './components/Sidebar'
 import Header from './components/Header'
 import Dashboard from './pages/Dashboard'
 import Alerts from './pages/Alerts'
@@ -10,17 +11,20 @@ export default function App() {
 
   const pages = {
     dashboard: <Dashboard />,
-    alerts: <Alerts />,
+    alerts:    <Alerts />,
     decisions: <Decisions />,
-    events: <Events />,
+    events:    <Events />,
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0f172a' }}>
-      <Header page={page} setPage={setPage} />
-      <main style={{ padding: '2rem' }}>
-        {pages[page]}
-      </main>
+    <div style={{ display: 'flex', minHeight: '100vh', background: '#f4f6f9' }}>
+      <Sidebar page={page} setPage={setPage} />
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>
+        <Header page={page} />
+        <main style={{ flex: 1, padding: '24px', overflow: 'auto' }}>
+          {pages[page]}
+        </main>
+      </div>
     </div>
   )
 }

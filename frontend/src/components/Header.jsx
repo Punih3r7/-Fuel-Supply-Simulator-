@@ -1,67 +1,76 @@
 import { useState, useEffect } from 'react'
 import { api } from '../api/client'
 
-export default function Header({ page, setPage }) {
+const TITLES = { dashboard: 'DASHBOARD', alerts: 'ALERTS', decisions: 'DECISIONS', events: 'EVENTS' }
+
+export default function Header({ page }) {
   const [status, setStatus] = useState(null)
 
   useEffect(() => {
-    const poll = () => api.systemStatus()
-      .then(setStatus)
-      .catch(() => api.health().then(h => setStatus({ ...h, active_alerts: '?', total_decisions: '?' }))
-      .catch(() => setStatus({ backend: 'error', simulator: 'error' })))
+    const poll = () => api.systemStatus().then(setStatus).catch(() => {})
     poll()
     const id = setInterval(poll, 10000)
     return () => clearInterval(id)
   }, [])
 
-  const dot = s => ({
-    display: 'inline-block', width: 8, height: 8, borderRadius: '50%', marginRight: 5,
-    background: s === 'ok' ? '#4ade80' : s === 'unavailable' ? '#fbbf24' : '#f87171',
-  })
-
-  const cbColor = s => s === 'closed' ? '#4ade80' : s === 'open' ? '#f87171' : '#fbbf24'
-
-  const navItem = (label, key) => (
-    <button onClick={() => setPage(key)} style={{
-      background: 'none', border: 'none', cursor: 'pointer', padding: '0.4rem 0.8rem',
-      borderRadius: 6, color: page === key ? '#38bdf8' : '#64748b',
-      fontWeight: page === key ? 600 : 400, fontSize: '0.9rem',
-    }}>{label}</button>
+  const pill = (label, ok) => (
+    <span style={{
+      padding: '3px 11px', borderRadius: 20, fontSize: 12, fontWeight: 500,
+      background: ok ? '#f0fdf4' : '#fef2f2',
+      color: ok ? '#16a34a' : '#dc2626',
+    }}>● {label}</span>
   )
+
+  const cbOk = status?.circuit_breaker === 'closed'
 
   return (
     <header style={{
-      background: '#0f172a', borderBottom: '1px solid #1e293b',
-      padding: '0.8rem 2rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between'
+      height: 62, background: 'white', borderBottom: '1px solid #e8ecf0',
+      display: 'flex', alignItems: 'center', padding: '0 24px', gap: 16, flexShrink: 0,
     }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
-        <span style={{ color: '#38bdf8', fontWeight: 'bold' }}>Fuel Intelligence</span>
-        <nav style={{ display: 'flex', gap: '0.25rem' }}>
-          {navItem('Dashboard', 'dashboard')}
-          {navItem('Alerts', 'alerts')}
-          {navItem('Decisions', 'decisions')}
-          {navItem('Events', 'events')}
-        </nav>
+      <h1 style={{ fontSize: 14, fontWeight: 700, color: '#1e293b', letterSpacing: '0.08em', minWidth: 110 }}>
+        {TITLES[page] || 'DASHBOARD'}
+      </h1>
+
+      {/* Search */}
+      <div style={{
+        display: 'flex', alignItems: 'center', gap: 8, background: '#f8f9fc',
+        border: '1px solid #e8ecf0', borderRadius: 8, padding: '6px 12px', maxWidth: 280, flex: '0 1 280px',
+      }}>
+        <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="#94a3b8" strokeWidth="2">
+          <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+        </svg>
+        <input readOnly placeholder="Search..." style={{
+          border: 'none', outline: 'none', background: 'none', fontSize: 13, color: '#64748b', width: '100%', cursor: 'default',
+        }}/>
       </div>
+
+      <div style={{ flex: 1 }}/>
+
+      {/* Status pills */}
       {status && (
-        <div style={{ display: 'flex', gap: '1.5rem', fontSize: '0.78rem', color: '#64748b', alignItems: 'center' }}>
-          <span><span style={dot(status.backend)} />backend</span>
-          <span><span style={dot(status.simulator)} />simulator</span>
-          {status.circuit_breaker && (
-            <span style={{ color: cbColor(status.circuit_breaker) }}>
-              CB: {status.circuit_breaker}
-            </span>
-          )}
-          {status.active_alerts !== undefined && (
-            <span style={{ color: status.critical_alerts > 0 ? '#f87171' : '#64748b' }}>
-              {status.active_alerts} alerts
-            </span>
-          )}
-          {status.total_decisions !== undefined && (
-            <span>{status.total_decisions} decisions</span>
-          )}
+        <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+          {pill(`Backend ${status.backend}`, status.backend === 'ok')}
+          {pill(`Sim ${status.simulator}`, status.simulator === 'ok')}
+          {status.circuit_breaker && pill(`CB: ${status.circuit_breaker}`, cbOk)}
         </div>
       )}
+
+      {/* User */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10, borderLeft: '1px solid #e8ecf0', paddingLeft: 16 }}>
+        <div style={{ textAlign: 'right' }}>
+          <div style={{ fontSize: 13, fontWeight: 600, color: '#1e293b' }}>Admin</div>
+          <div style={{ fontSize: 11, color: '#94a3b8' }}>Fuel Intelligence</div>
+        </div>
+        <div style={{
+          width: 34, height: 34, background: 'linear-gradient(135deg,#f97316,#fb923c)',
+          borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center',
+          color: 'white', fontWeight: 700, fontSize: 13, flexShrink: 0,
+        }}>A</div>
+        <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="#94a3b8" strokeWidth="2">
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
+      </div>
     </header>
   )
 }
