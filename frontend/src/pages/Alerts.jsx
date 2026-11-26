@@ -28,13 +28,31 @@ export default function Alerts() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const load = () => api.alerts(0).then(a => { setAlerts(a); setLoading(false) }).catch(() => setLoading(false))
+    const load = () => api.alerts(0)
+      .then(a => { setAlerts(a); setLoading(false) })
+      .catch(() => setLoading(false))
     load()
-    const id = setInterval(load, 10000)
+    const id = setInterval(load, 8000)
     return () => clearInterval(id)
   }, [])
 
-  if (loading) return <p style={{ color: '#94a3b8' }}>Loading alerts…</p>
+  if (loading) return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+      {[1,2,3,4,5].map(i => (
+        <div key={i} style={{
+          background: 'white', borderRadius: 12, padding: '16px 20px',
+          border: '1px solid #eef1f6', borderLeft: '4px solid #e2e8f0',
+        }}>
+          <div style={{ display: 'flex', gap: 10, marginBottom: 10 }}>
+            <div style={{ height: 14, width: 120, background: '#f1f5f9', borderRadius: 4 }}/>
+            <div style={{ height: 14, width: 60,  background: '#f1f5f9', borderRadius: 4 }}/>
+            <div style={{ height: 14, width: 70,  background: '#f1f5f9', borderRadius: 20 }}/>
+          </div>
+          <div style={{ height: 12, width: '60%', background: '#f1f5f9', borderRadius: 4 }}/>
+        </div>
+      ))}
+    </div>
+  )
 
   return (
     <div>
