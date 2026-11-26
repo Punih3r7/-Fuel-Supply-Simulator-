@@ -55,7 +55,7 @@ Wait for all services to be healthy, then:
 | Simulator | http://localhost:8000/v1/health |
 | Backend | http://localhost:8080/health |
 | Dashboard | http://localhost:3000 |
-![alt text](image-11.png)
+![alt text](image-16.png)
 | Prometheus | http://localhost:9090 |
 | Grafana | http://localhost:3001 |
 
@@ -64,7 +64,7 @@ Run the smoke test:
 ```bash
 k6 run devops/k6/smoke-test.js
 ```
-![alt text](image-12.png) ![alt text](image-13.png)
+![alt text](smoke.gif)
 
 
 Run the full load test:
@@ -72,4 +72,4 @@ Run the full load test:
 ```bash
 k6 run devops/k6/load-test.js
 ```
-![alt text](image-14.png) ![alt text](image-15.png)
+![alt text](load.gif)
